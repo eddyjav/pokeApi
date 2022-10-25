@@ -1,7 +1,7 @@
-# Docu Kruger
+# PokeAPI Challenge
 Mi nombre es Javier Yánez
 
-Este repositorio contiene tanto:
+Este es mi repositorio y contiene tanto:
 
 - Back-end
 - Front-end

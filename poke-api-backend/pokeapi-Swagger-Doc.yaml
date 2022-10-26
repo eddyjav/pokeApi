@@ -1,0 +1,101 @@
+openapi: 3.0.1
+info:
+  title: API de PokeAPI Challenge.
+  description: Esta API menja la información de la aplicaion PokeDex creada para la PokeAPI Challenge.
+  version: 1.0.0
+servers:
+- url: https://pokeapi-jv.herokuapp.com/api
+tags:
+- name: pokemons
+  description: Obtiene la información de los pokemons
+
+paths:
+    
+  /pokemon/{name}:
+    get:
+      tags:
+      - pokemons
+      summary: Obtiene la infomación de un pokemon.
+      parameters:
+      - name: name
+        in: path
+        description: Nombre dek pokemon a obtener
+        required: true
+        schema:
+          type: string
+        
+      responses:
+        200:
+          description: (OK) La información del pokemon se obtuvo correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PokemonNameGet'
+        500:
+          $ref: '#/components/responses/ServerError'
+  
+  /pokemon/:
+    get:
+      tags:
+      - pokemons
+      summary: Obtiene la infomación de varios pokemons con paginación, tiene query params donde se maneja el limite(limit) y el salto(skip).
+      parameters:
+      - in: query
+        name: limit
+        description: Limite de pokemons a mostrar
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: skip
+        description: Salto entre los pokemons
+        required: true
+        schema:
+          type: string
+        
+        
+      responses:
+        200:
+          description: (OK) La información del pokemon se obtuvo correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PokemonNameGet'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        500:
+          $ref: '#/components/responses/ServerError'
+
+
+components:
+  responses:
+    
+    
+    BadRequest:
+      description: (Bad Request) Los datos enviados son incorrectos o no fueron enviados los datos
+      
+    ServerError:
+      description: Error en servidor
+ 
+  schemas:
+          
+    PokemonNameGet:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          description: Indica que tuvo una respuesta exitosa
+        pokemon:
+          description: Es el arreglo con los datos del pokemon
+    
+    PokemonAllGet:
+      type: object
+      properties:
+        ok:
+          type: boolean
+          description: Indica que tuvo una respuesta exitosa
+        pokemon:
+          description: Es el arreglo con los datos del pokemon
+          
+    
+          
